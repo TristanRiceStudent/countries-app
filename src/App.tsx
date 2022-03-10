@@ -1,25 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useColourScheme } from "./hooks/useColourScheme";
+import { ThemeProvider } from "styled-components";
+import Header from "./components/Header/Header";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
+import CountriesSearch from "./pages/CountriesSearch/CountriesSearch";
+import Country from "./pages/Country/Country";
 
 function App() {
+  const { theme } = useColourScheme();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<CountriesSearch />} />
+          <Route path="/country/:alpha3Code" element={<Country />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
